@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"net/http"
 
+	"github.com/Gustavicho/gocommerce/service/auth"
 	"github.com/Gustavicho/gocommerce/types"
 	"github.com/Gustavicho/gocommerce/utils"
 )
@@ -45,12 +46,17 @@ func (h *Handler) handleRegister(w http.ResponseWriter, r *http.Request) {
 		))
 	}
 
+	hashedPassword, err := auth.HashPassword(payload.Password)
+	if err != nil {
+		utils.WriteJSON(w, http.StatusInternalServerError, nil)
+	}
+
 	// if doesnt, create user
 	err = h.store.CreateUser(&types.User{
 		FirstName: payload.FirstName,
 		LastName:  payload.LastName,
 		Email:     payload.Email,
-		Password:  payload.Password,
+		Password:  hashedPassword,
 	})
 	if err != nil {
 		utils.WriteError(w, http.StatusInternalServerError, err)
