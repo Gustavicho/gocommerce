@@ -25,7 +25,8 @@ func (as *APIService) Run() error {
 
 	router := http.NewServeMux()
 
-	userHandler := user.NewHandler()
+	userStore := user.NewStore(as.DB)
+	userHandler := user.NewHandler(userStore)
 	userHandler.AddPrefix("/api/v1")
 	userHandler.RegisterRoutes(router)
 
