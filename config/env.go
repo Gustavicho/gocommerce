@@ -24,7 +24,7 @@ func initConfig() Config {
 	
 	return Config{
 		PublicHost: getEnv("PUBLIC_HOST", "localhost"),
-		Port: getEnv("PORT", "8080"),
+		Port: ":" + getEnv("PORT", "8080"),
 
 		DBUser: getEnv("DB_USER", "mysql"),
 		DBPassword: getEnv("DB_PASSWORD", ""),
