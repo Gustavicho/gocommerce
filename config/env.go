@@ -9,27 +9,27 @@ import (
 
 type Config struct {
 	PublicHost string
-	Port string
-	
-	DBUser string
+	Port       string
+
+	DBUser     string
 	DBPassword string
-	DBAddress string
-	DBName string
+	DBAddress  string
+	DBName     string
 }
 
 var Envs Config = initConfig()
 
 func initConfig() Config {
 	godotenv.Load()
-	
+
 	return Config{
 		PublicHost: getEnv("PUBLIC_HOST", "localhost"),
-		Port: ":" + getEnv("PORT", "8080"),
+		Port:       ":" + getEnv("PORT", "8080"),
 
-		DBUser: getEnv("DB_USER", "mysql"),
+		DBUser:     getEnv("DB_USER", "mysql"),
 		DBPassword: getEnv("DB_PASSWORD", ""),
-		DBAddress: fmt.Sprintf("%s:%s", getEnv("DB_HOST", "localhost"), getEnv("DB_PORT", "3306")),
-		DBName: getEnv("DB_NAME", "postgres"),
+		DBAddress:  fmt.Sprintf("%s:%s", getEnv("DB_HOST", "localhost"), getEnv("DB_PORT", "3306")),
+		DBName:     getEnv("DB_NAME", "postgres"),
 	}
 }
 

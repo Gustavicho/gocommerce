@@ -10,13 +10,13 @@ import (
 
 type APIService struct {
 	Addr string
-	DB *sql.DB
+	DB   *sql.DB
 }
 
 func NewAPIService(addr string, db *sql.DB) *APIService {
 	return &APIService{
 		Addr: addr,
-		DB: db,
+		DB:   db,
 	}
 }
 
@@ -29,5 +29,5 @@ func (as *APIService) Run() error {
 	userHandler.AddPrefix("/api/v1")
 	userHandler.RegisterRoutes(router)
 
-	return http.ListenAndServe(as.Addr, router)	
+	return http.ListenAndServe(as.Addr, router)
 }
