@@ -4,11 +4,15 @@ import (
 	"encoding/json"
 	"errors"
 	"net/http"
+
+	"github.com/go-playground/validator/v10"
 )
+
+var Validate = validator.New()
 
 func ParseJSON(r *http.Request, payload any) error {
 	if r.Body == nil {
-		return errors.New("Missign fields at request")
+		return errors.New("The request body is empty")
 	}
 
 	return json.NewDecoder(r.Body).Decode(payload)
