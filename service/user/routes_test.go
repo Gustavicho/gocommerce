@@ -71,10 +71,10 @@ func (m *mockUserStore) GetUserByEmail(email string) (*types.User, error) {
 	return nil, fmt.Errorf("This user already exists")
 }
 
-func (m *mockUserStore) GetUserByID(id uint) (*types.User, error) {
+func (m *mockUserStore) GetUserByID(id int) (*types.User, error) {
 	return nil, nil
 }
 
-func (m *mockUserStore) CreateUser(user *types.User) error {
+func (m *mockUserStore) CreateUser(types.User) error {
 	return nil
 }
