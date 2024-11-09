@@ -7,6 +7,7 @@ import (
 	"github.com/Gustavicho/gocommerce/service/auth"
 	"github.com/Gustavicho/gocommerce/types"
 	"github.com/Gustavicho/gocommerce/utils"
+	"github.com/go-playground/validator/v10"
 )
 
 type Handler struct {
@@ -45,7 +46,8 @@ func (h *Handler) handleRegister(w http.ResponseWriter, r *http.Request) {
 
 	// validate payload
 	if err := utils.Validate.Struct(payload); err != nil {
-		utils.WriteError(w, http.StatusBadRequest, err)
+		errors := err.(validator.ValidationErrors)
+		utils.WriteError(w, http.StatusBadRequest, fmt.Errorf("invalid payload: %v", errors))
 		return
 	}
 
@@ -66,7 +68,7 @@ func (h *Handler) handleRegister(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// if doesnt, create user
-	err = h.store.CreateUser(&types.User{
+	err = h.store.CreateUser(types.User{
 		FirstName: payload.FirstName,
 		LastName:  payload.LastName,
 		Email:     payload.Email,
