@@ -52,6 +52,7 @@ func (h *Handler) handleLogin(w http.ResponseWriter, r *http.Request) {
 	u, err := h.store.GetUserByEmail(payload.Email)
 	if err != nil {
 		utils.WriteError(w, http.StatusBadRequest, err)
+		return
 	}
 
 	// check if password matches
