@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"net/http"
 
+	"github.com/Gustavicho/gocommerce/service/product"
 	"github.com/Gustavicho/gocommerce/service/user"
 )
 
@@ -29,6 +30,11 @@ func (as *APIService) Run() error {
 	userHandler := user.NewHandler(userStore)
 	userHandler.AddPrefix("/api/v1")
 	userHandler.RegisterRoutes(router)
+
+	productStore := product.NewStore(as.DB)
+	productHandler := product.NewHandler(productStore)
+	productHandler.AddPrefix("/api/v1")
+	productHandler.RegisterRoutes(router)
 
 	return http.ListenAndServe(as.Addr, router)
 }
